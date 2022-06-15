@@ -1,26 +1,27 @@
 import React, {useState,useEffect} from 'react'
-import {useSearchParams} from 'react-router-dom';
+import {useLocation, useSearchParams} from 'react-router-dom';
 const Pagination = () => {
    const [searchParams, setSearchParams] = useSearchParams([]);
    const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get("page")) || 1);
    const [isPrevDisabled, setIsPrevDisabled] = useState(true);
    const [isNextDisabled, setIsNextDisabled] = useState(false);
-
+   const location = useLocation();
 
   useEffect(()=>{
-    if(searchParams.get("page")){
-    setCurrentPage(parseInt(searchParams.get("page")));
-    }
-  },[])
+    searchParams.get("page") ? setCurrentPage(parseInt(searchParams.get("page"))) : setCurrentPage(1);
+    searchParams.get("id") ? setIsNextDisabled(true) : setIsNextDisabled(false);
+  },[location])
   
   useEffect(()=>{
 
-    currentPage===1 ? setIsPrevDisabled(true) : setIsPrevDisabled(false)
-    searchParams.set("page",currentPage);
-    setSearchParams(searchParams);
+    currentPage===1 ? setIsPrevDisabled(true) : setIsPrevDisabled(false);
 
+    if(!searchParams.get("id")){
+      searchParams.set("page",currentPage);
+      setSearchParams(searchParams);
+    }
+    
   },[currentPage]);
-
 
 
   return (
@@ -28,15 +29,19 @@ const Pagination = () => {
         <button 
             className="btn btn-dark" 
             onClick={()=>{
+              if(!searchParams.get("id")){
                 setCurrentPage(parseInt(currentPage-1));
                 searchParams.set("page",currentPage);
+              }
             }}
             disabled={isPrevDisabled}>{'<'} Previous</button>
         <button 
             className="btn btn-dark" 
             onClick={()=>{
+              if(!searchParams.get("id")){
                 setCurrentPage(parseInt(currentPage+1));
                 searchParams.set("page",currentPage);
+              }
             }}
             disabled={isNextDisabled}>Next {'>'}</button>
     </div>

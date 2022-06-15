@@ -4,13 +4,13 @@ import {useLocation, useSearchParams } from "react-router-dom";
 const Products = () => {
     var [products, setProducts] = useState({});
     const [perPage, setPerPage] = useState();
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
 
     useEffect(()=>{
         setIsLoading(true);
-
+        searchParams.set("page", searchParams.get("page"));
         fetch("https://reqres.in/api/products?"+searchParams, searchParams).then((response)=>response.json()).then((json)=>{
             setIsLoading(false);
             setProducts(json.data);
