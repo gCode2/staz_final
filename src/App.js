@@ -1,23 +1,38 @@
-import logo from './logo.svg';
+import React from 'react';
+import Search from './components/Search';
+import Products from './components/Products';
+import Pagination from './components/Pagination';
+import { BrowserRouter as Router} from "react-router-dom";
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="container">
+      <div className="header py-2"><h2>Filter data</h2></div>
+      <Router>
+        <div className="inputHolder mb-2">
+          <Search></Search>
+        </div>
+        <div className="content">
+           <table className="table mt-2">
+            <thead className="thead-dark">
+                <tr>
+                    <th>id</th>
+                    <th>name</th> 
+                    <th>year</th>
+                </tr>
+            </thead>
+            <tbody>
+              <Products></Products>
+            </tbody>
+          </table>
+          <div className="pagHolder">
+          <Pagination></Pagination>
+          </div>
+        </div>
+      </Router>
+      </div>
     </div>
   );
 }
