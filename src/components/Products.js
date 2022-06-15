@@ -10,7 +10,6 @@ const Products = () => {
 
     useEffect(()=>{
         setIsLoading(true);
-        searchParams.set("page", searchParams.get("page"));
         fetch("https://reqres.in/api/products?"+searchParams, searchParams).then((response)=>response.json()).then((json)=>{
             setIsLoading(false);
             setProducts(json.data);
