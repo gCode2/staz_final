@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Search from './components/Search';
 import Products from './components/Products';
 import Pagination from './components/Pagination';
@@ -6,6 +6,12 @@ import { BrowserRouter as Router} from "react-router-dom";
 import './App.css';
 
 function App() {
+  const [isNextDisabled, setIsNextDisabled] = useState(false);
+
+  const handleCallback = (nextDisabled) =>{
+    setIsNextDisabled(nextDisabled);
+  }
+
   return (
     <div className="App">
       <div className="container">
@@ -24,11 +30,11 @@ function App() {
                 </tr>
             </thead>
             <tbody>
-              <Products></Products>
+              <Products setNextDisabledCallback={handleCallback}></Products>
             </tbody>
           </table>
           <div className="pagHolder">
-          <Pagination></Pagination>
+          <Pagination nextDisabled={isNextDisabled}></Pagination>
           </div>
         </div>
       </Router>
