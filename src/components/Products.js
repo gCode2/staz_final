@@ -3,8 +3,6 @@ import {useLocation, useSearchParams } from "react-router-dom";
 
 const Products = ({setNextDisabledCallback}) => {
     let [products, setProducts] = useState({});
-    const [perPage, setPerPage] = useState();
-    const [total, setTotal] = useState();
     const [searchParams] = useSearchParams();
     const [isLoading, setIsLoading] = useState(true);
     const location = useLocation();
@@ -12,20 +10,14 @@ const Products = ({setNextDisabledCallback}) => {
     const disableNextButton = (isNextDisabled) => {
         setNextDisabledCallback(isNextDisabled);
     }
-    useEffect(()=>{
-        parseInt(searchParams.get("page")) >= total/perPage ? disableNextButton(true) : disableNextButton(false);
-    },[])
 
     useEffect(()=>{
         setIsLoading(true);
         fetch("https://reqres.in/api/products?"+searchParams).then((response)=>response.json()).then((json)=>{
             setIsLoading(false);
             setProducts(json.data);
-            setPerPage(json.per_page);
-            setTotal(json.total);
-            
-        });
-        parseInt(searchParams.get("page")) >= total/perPage ? disableNextButton(true) : disableNextButton(false);
+            parseInt(searchParams.get("page")) >= json.total/json.per_page ? disableNextButton(true) : disableNextButton(false);
+        })
     },[location])
 
 
