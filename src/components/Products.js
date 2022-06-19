@@ -18,7 +18,7 @@ const Products = ({setNextDisabledCallback}) => {
 
     useEffect(()=>{
         setIsLoading(true);
-        fetch("https://reqres.in/api/products?"+searchParams, searchParams).then((response)=>response.json()).then((json)=>{
+        fetch("https://reqres.in/api/products?"+searchParams).then((response)=>response.json()).then((json)=>{
             setIsLoading(false);
             setProducts(json.data);
             setPerPage(json.per_page);
