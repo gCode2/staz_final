@@ -4,4 +4,4 @@ The goal of the task was to create SPA application which displays paginated list
 
 ## How to run the app
 
-To run the app you should run `npm install` and then `npm start`.
+To run the app you have to clone the repository, navigate to app's root directory by `cd staz_final` and then run `npm install` and `npm start`.
